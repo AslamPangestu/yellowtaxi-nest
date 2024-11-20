@@ -8,7 +8,7 @@ export class TripsController {
     constructor(private service: TripsService) {}
 
     @Get()
-    getAllItems(@Query() query: PaginationDTO) {
+    getAll(@Query() query: PaginationDTO) {
       return this.service.getAll(query);
     }
 }

@@ -8,7 +8,7 @@ import { PaginationDTO } from './dtos/pagination.dto';
 @Injectable()
 export class TripsService {
     constructor(@InjectRepository(Trip) private repository: Repository<Trip>) { }
-    
+
     async getAll(query: PaginationDTO) {
         const { page, limit } = query;
         const [result, total] = await this.repository.findAndCount({ skip: (page - 1) * limit, take: limit, });
