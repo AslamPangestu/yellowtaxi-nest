@@ -1,14 +1,32 @@
 import { Controller, Get, Query } from '@nestjs/common';
 
-import { PaginationDTO } from './dtos/pagination.dto';
+import { GetAllDTO } from './dtos/get-all.dto';
 import { TripsService } from './trips.service';
 
-@Controller('trips')
+@Controller()
 export class TripsController {
-    constructor(private service: TripsService) {}
+  constructor(private service: TripsService) { }
 
-    @Get()
-    getAll(@Query() query: PaginationDTO) {
-      return this.service.getAll(query);
+  @Get('trips')
+  async getAll(@Query() query: GetAllDTO) {
+    if(query.radius > 10000){
+      return this.service.findClusters(query);
     }
+    return this.service.findAll(query);
+  }
+
+  @Get('payment-types')
+  async getPaymentTypes() {
+    const OPTIONS = {
+      CRD: 'Credit Card',
+      CSH: 'Cash',
+      NOC: 'No Charge',
+      DIS: 'Dispute',
+      UNK: 'Unknown',
+      VOD: 'Voided',
+    }
+    const response: Array<{ payment_type: keyof typeof OPTIONS }> = await this.service.findPaymentTypes();
+    // return response;
+    return response.map((item) => ({ value: item.payment_type, label: OPTIONS[item.payment_type] }));
+  }
 }
