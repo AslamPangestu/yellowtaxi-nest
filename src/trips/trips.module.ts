@@ -8,6 +8,6 @@ import { Trip } from './trips.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Trip])],
   providers: [TripsService],
-  controllers: [TripsController]
+  controllers: [TripsController],
 })
 export class TripsModule {}

@@ -28,4 +28,4 @@ import { Trip } from './trips/trips.entity';
     { provide: 'APP_PIPE', useValue: new ValidationPipe({ whitelist: true }) },
   ],
 })
-export class AppModule { }
+export class AppModule {}
